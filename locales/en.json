@@ -1,0 +1,8 @@
+{
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "email": "Email",
+        "eCommerce": "eCommerce",
+        "analytics": "Analytics"
+    }
+}
