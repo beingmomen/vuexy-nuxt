@@ -17,7 +17,7 @@
       >
         <align-justify-icon
           size="1.5x"
-          class="custom-class"
+          class="navbar-custome-calsss"
         ></align-justify-icon>
       </nuxt-link>
 
@@ -35,25 +35,35 @@
           >
             <template #button-content>
               <b-img
-                :src="require('/assets/images/flags/en.png')"
+                :src="
+                  require(`/assets/images/flags/${currentLang || lang}.png`)
+                "
                 height="14px"
                 width="22px"
                 alt="English"
               />
-              <span class="ml-50 text-body">English</span>
+              <span class="ml-50 text-body">{{
+                currentLang || lang | languageName
+              }}</span>
             </template>
             <b-dropdown-item
-              v-for="localeObj in locales"
-              :key="localeObj.locale"
-              @click="$i18n.locale = localeObj.locale"
+              v-for="locale in availableLocales"
+              :key="locale.code"
             >
               <b-img
-                :src="localeObj.img"
+                :src="require(`/assets/images/flags/${locale.code}.png`)"
                 height="14px"
                 width="22px"
-                :alt="localeObj.locale"
+                alt=""
               />
-              <span class="ml-50">{{ localeObj.name }}</span>
+              <nuxt-link
+                class="lang-name"
+                to=""
+                @click.native="
+                  switchLang(locale.code), $i18n.setLocale(locale.code)
+                "
+                >{{ locale.code | languageName }}</nuxt-link
+              >
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </li>
@@ -63,13 +73,13 @@
               @click="toggleMode('dark')"
               v-if="dashboardMode"
               size="1.5x"
-              class="custom-class"
+              class="navbar-custome-calsss"
             ></moon-icon>
             <sun-icon
               @click="toggleMode('light')"
               v-else
               size="1.5x"
-              class="custom-class"
+              class="navbar-custome-calsss"
             ></sun-icon>
           </nuxt-link>
         </li>
@@ -82,7 +92,7 @@
             <template #button-content>
               <div class="d-sm-flex d-none user-nav">
                 <p class="user-name font-weight-bolder mb-0">Abdelmomen</p>
-                <span class="user-status">Admin</span>
+                <span class="user-status">{{ $t("navbar.admin") }}</span>
               </div>
               <b-avatar
                 size="40"
@@ -92,7 +102,10 @@
                 class="badge-minimal"
                 badge-variant="success"
               >
-                <user-icon size="1.5x" class="custom-class"></user-icon>
+                <user-icon
+                  size="1.5x"
+                  class="navbar-custome-calsss"
+                ></user-icon>
               </b-avatar>
             </template>
 
@@ -100,8 +113,11 @@
               :to="{ name: '' }"
               link-class="d-flex align-items-center"
             >
-              <user-icon size="1.5x" class="custom-class mr-50"></user-icon>
-              <span>Profile</span>
+              <user-icon
+                size="1.5x"
+                class="navbar-custome-calsss mr-50"
+              ></user-icon>
+              <span>{{ $t("navbar.profile") }}</span>
             </b-dropdown-item>
 
             <b-dropdown-divider />
@@ -112,9 +128,9 @@
             >
               <settings-icon
                 size="1.5x"
-                class="custom-class mr-50"
+                class="navbar-custome-calsss mr-50"
               ></settings-icon>
-              <span>Settings</span>
+              <span>{{ $t("navbar.setting") }}</span>
             </b-dropdown-item>
             <b-dropdown-item
               link-class="d-flex align-items-center"
@@ -122,9 +138,9 @@
             >
               <log-out-icon
                 size="1.5x"
-                class="custom-class mr-50"
+                class="navbar-custome-calsss mr-50"
               ></log-out-icon>
-              <span>Logout</span>
+              <span>{{ $t("navbar.logout") }}</span>
             </b-dropdown-item></b-nav-item-dropdown
           >
         </li>
@@ -147,13 +163,11 @@ import {
   AlignJustifyIcon,
 } from "vue-feather-icons";
 export default {
-  async asyncData(context) {
-    console.warn("app refresh", context);
-  },
   props: ["width"],
   data() {
     return {
       view: false,
+      currentLang: "",
       locales: [
         {
           locale: "ar",
@@ -164,11 +178,6 @@ export default {
           locale: "en",
           img: require("/assets/images/flags/en.png"),
           name: "English",
-        },
-        {
-          locale: "de",
-          img: require("/assets/images/flags/de.png"),
-          name: "German",
         },
       ],
     };
@@ -188,6 +197,43 @@ export default {
         document.body.classList.add("light-layout");
       }
     },
+    switchLang(lang) {
+      this.currentLang = lang;
+      this.$store.dispatch("changeDashDir", lang);
+      if (lang == "ar") {
+        document.documentElement.classList.add("arabic-dir");
+        document.documentElement.setAttribute("dir", "rtl");
+        document.documentElement.setAttribute("lang", "ar");
+        document.documentElement.classList.remove("english-dir");
+      } else {
+        document.documentElement.classList.remove("arabic-dir");
+        document.documentElement.setAttribute("dir", "ltr");
+        document.documentElement.setAttribute("lang", "en");
+        document.documentElement.classList.add("english-dir");
+      }
+    },
+  },
+  computed: {
+    availableLocales() {
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale);
+    },
+    lang() {
+      return (this.currentLang = this.$cookies.get("i18n_redirected"));
+    },
+  },
+  filters: {
+    languageName(value) {
+      switch (value) {
+        case "ar":
+          return (value = "Arabic");
+          break;
+        case "en":
+          return (value = "English");
+          break;
+        default:
+          break;
+      }
+    },
   },
   components: {
     DiscIcon,
@@ -205,13 +251,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.custom-class {
-  color: #6e6b7b;
-}
-@media (max-width: 1199.98px) {
-  .vertical-layout.vertical-menu-modern.menu-collapsed
-    .header-navbar.floating-nav {
-    width: calc(100vw - (100vw - 100%) - calc(2rem * 2)) !important;
-  }
-}
 </style>

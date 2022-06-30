@@ -4,11 +4,10 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
-
-a:hover {
-    text-decoration: none;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
+@import "/@core/scss/vue/pages/page-auth.scss";
+@import "./files/transition";
+@import "./files/reset.scss";
+@import "./files/sidebar";
+@import "./files/spinner";
+@import "./files/toastification__toast";
+@import "./files/navbar";

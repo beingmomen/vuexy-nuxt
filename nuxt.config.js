@@ -4,6 +4,8 @@ export default {
         title: 'Vuxy-Nuxt',
         htmlAttrs: {
             lang: 'en',
+            dir: "ltr",
+            class: 'english-dir'
         },
         bodyAttrs: {
             class: 'light-layout'
@@ -16,17 +18,26 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            { rel: 'stylesheet', type: 'image/x-icon', href: '/favicon.ico' },
-
-
+            { rel: 'stylesheet', type: 'image/x-icon', href: '/favicon.ico' }
         ]
+    },
+
+    pageTransition: {
+        name: 'my-page',
+        mode: 'out-in',
+        beforeEnter(el) {
+            console.warn('Before enter...');
+        }
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~/@core/scss/core.scss',
+        '@fortawesome/fontawesome-svg-core/styles.css',
+        '~/assets/css/bootstrap.min.css',
+        // '~/assets/css/bootstrap.rtl.min.css',
+        '~/assets/scss/rtl.scss',
         '~/assets/scss/style.scss',
-        '@fortawesome/fontawesome-svg-core/styles.css'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -42,7 +53,9 @@ export default {
     components: true,
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-    buildModules: [],
+    buildModules: [
+    ],
+
 
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
@@ -65,12 +78,21 @@ export default {
     i18n: {
         lazy: true,
         langDir: 'locales/',
+        strategy: 'no_prefix',
         locales: [
-            { code: 'ar', iso: 'ar-EG', file: 'ar', dir: 'rtl' },
-            { code: 'de', iso: 'de-AT', file: 'de', dir: 'ltr' },
             { code: 'en', iso: 'en-US', file: 'en', dir: 'ltr' },
+            { code: 'ar', iso: 'ar-EG', file: 'ar', dir: 'rtl' },
         ],
         defaultLocale: 'ar',
+        // parsePages: false,
+        // pages: {
+        //     dashboard: false
+        // },
+        // detectBrowserLanguage: {
+        //     useCookie: true,
+        //     cookieKey: 'i18n_redirected',
+        //     redirectOn: 'root',  // recommended
+        // }
 
     },
 

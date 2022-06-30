@@ -13,7 +13,11 @@
         <div
           class="w-100 d-lg-flex align-items-center justify-content-center px-5"
         >
-          <b-img fluid :src="imgUrl" alt="Login V2" />
+          <b-img
+            fluid
+            :src="require('~/assets/images/pages/login-v2.svg')"
+            alt="Login V2"
+          />
         </div>
       </b-col>
       <!-- /Left Text-->
@@ -22,29 +26,33 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title class="mb-1 font-weight-bold" title-tag="h2">
-            Welcome to Vuexy! 👋
+            {{ $t("login.welcome") }} 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+            {{ $t("login.please") }}
           </b-card-text>
 
           <b-alert variant="primary" show>
             <div class="alert-body font-small-2">
               <p>
                 <small class="mr-50"
-                  ><span class="font-weight-bold">Admin:</span> admin@demo.com |
-                  admin</small
+                  ><span class="font-weight-bold"
+                    >{{ $t("login.admin") }}:</span
+                  >
+                  admin@demo.com | admin</small
                 >
               </p>
               <p>
                 <small class="mr-50"
-                  ><span class="font-weight-bold">Client:</span> client@demo.com
-                  | client</small
+                  ><span class="font-weight-bold"
+                    >{{ $t("login.client") }}:</span
+                  >
+                  client@demo.com | client</small
                 >
               </p>
             </div>
             <help-circle-icon
-              v-b-tooltip.hover.left="'This is just for ACL demo purpose'"
+              v-b-tooltip.hover.left="`${$t('login.tooltip')}`"
               style="top: 10; right: 10"
               size="1.5x"
               class="custom-class position-absolute"
@@ -63,7 +71,7 @@
                 v-slot="{ errors, classes }"
               >
                 <b-form-group
-                  label="Email"
+                  :label="$t('inputs.email')"
                   label-for="login-email"
                   :class="classes"
                 >
@@ -84,9 +92,11 @@
               <ValidationProvider rules="required" v-slot="{ errors, classes }">
                 <b-form-group :class="classes">
                   <div class="d-flex justify-content-between">
-                    <label for="login-password">Password</label>
+                    <label for="login-password">{{
+                      $t("inputs.password")
+                    }}</label>
                     <nuxt-link :to="{ name: 'auth-forgot-password' }">
-                      <small>Forgot Password?</small>
+                      <small>{{ $t("inputs.forget") }}</small>
                     </nuxt-link>
                   </div>
                   <b-input-group
@@ -122,15 +132,15 @@
                 :disabled="invalid"
                 block
               >
-                Sign in
+                {{ $t("buttons.login") }}
               </b-button>
             </b-form>
           </ValidationObserver>
 
           <b-card-text class="text-center mt-3">
-            <span>New on our platform? </span>
+            <span>{{ $t("login.new_platform") }} </span>
             <nuxt-link :to="{ name: 'auth-register' }">
-              <span>&nbsp;Create an account</span>
+              <span>{{ $t("login.new_account") }}</span>
             </nuxt-link>
           </b-card-text>
         </b-col>
@@ -150,11 +160,6 @@ export default {
         email: "admin@admin.com",
         password: "password",
       },
-      status: "",
-      password: "admin",
-      userEmail: "admin@demo.com",
-      sideImg: require("~/assets/images/pages/login-v2.svg"),
-      // assets/images/pages/login-v2.svg
     };
   },
   methods: {
@@ -164,26 +169,18 @@ export default {
           data: this.login,
         });
 
+        let position = this.$i18n.locale == "en" ? "top-right" : "top-left";
+
         this.$toast(`Welcome ${res.data.email}`, {
           hideProgressBar: true,
-          position: "top-right",
+          position,
           icon: CoffeeIcon,
           closeOnClick: false,
           showCloseButtonOnHover: true,
         });
       } catch (err) {
-        console.warn("err.response ::::", err.response);
+        this.$toast.error(err.response.data.error.message);
       }
-    },
-  },
-  computed: {
-    imgUrl() {
-      // if (this.$store.appConfig.state.layout.skin === "dark") {
-      //   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      //   this.sideImg = require("~/assets/images/pages/login-v2-dark.svg");
-      //   return this.sideImg;
-      // }
-      return this.sideImg;
     },
   },
   components: {
@@ -193,19 +190,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.Vue-Toastification__toast.Vue-Toastification__toast--default.top-right {
-  background-color: #fff;
-  .Vue-Toastification__toast-body {
-    color: #7367f0;
-    margin-top: 5px;
-  }
-  svg {
-    color: #7367f0;
-  }
-  button {
-    color: #7367f0;
-  }
-}
-</style>

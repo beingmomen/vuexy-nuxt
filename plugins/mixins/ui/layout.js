@@ -13,6 +13,9 @@ const mixins = {
         },
         dashboardMode() {
             return this.$store.getters["getMode"]
+        },
+        dashDirection() {
+            return this.$store.getters["getDashDir"]
         }
     },
 

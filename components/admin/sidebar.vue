@@ -44,7 +44,7 @@
         <MainSidebarBreakLink />
         <MainSidebarLink
           :name="$t(`sidebar.email`)"
-          route="email"
+          route="dashboard/email"
           icon="fa-envelope"
         />
         <MainSidebarGroupLink
@@ -59,23 +59,15 @@
 </template>
 
 <script>
-import {
-  DiscIcon,
-  CircleIcon,
-  MoreHorizontalIcon,
-  HomeIcon,
-  MailIcon,
-  XIcon,
-} from "vue-feather-icons";
-
+import { XIcon } from "vue-feather-icons";
 export default {
   props: ["width"],
   data() {
     return {
       hover: false,
       dashboardChild: [
-        { name: this.$t("sidebar.eCommerce"), route: "eCommerce" },
-        { name: this.$t("sidebar.analytics"), route: "Analytics" },
+        { name: this.$t("sidebar.eCommerce"), route: "dashboard/eCommerce" },
+        { name: this.$t("sidebar.analytics"), route: "dashboard/analytics" },
       ],
       invoiceChild: [
         { name: "List", route: "list" },
@@ -85,11 +77,6 @@ export default {
     };
   },
   components: {
-    DiscIcon,
-    CircleIcon,
-    MoreHorizontalIcon,
-    HomeIcon,
-    MailIcon,
     XIcon,
   },
   methods: {
@@ -102,18 +89,8 @@ export default {
       }
     },
   },
-
-  watch: {},
 };
 </script>
 
 <style lang="scss">
-@import "/@core/scss/base/core/menu/menu-types/vertical-menu.scss";
-
-.menu-hide .main-menu {
-  width: 0 !important;
-}
-.menu-hide.menu-open .main-menu {
-  width: 260px !important;
-}
 </style>

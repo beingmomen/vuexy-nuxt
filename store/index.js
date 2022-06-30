@@ -1,7 +1,8 @@
 export const state = () => ({
     layoutCollapsed: true,
     sidebar: false,
-    mode: true
+    mode: true,
+    dashDir: "ltr"
 });
 
 export const getters = {
@@ -13,6 +14,9 @@ export const getters = {
     },
     getMode(state) {
         return state.mode
+    },
+    getDashDir(state) {
+        return state.dashDir
     }
 };
 
@@ -30,6 +34,14 @@ export const actions = {
     layoutMode({ commit }, payload) {
         commit("setMode", payload == 'light' ? true : false)
     },
+    changeDashDir({ commit }, payload) {
+        if (payload == "ar") {
+            commit("setDashDir", "rtl")
+        } else {
+            commit("setDashDir", "ltr")
+        }
+    }
+
 };
 
 export const mutations = {
@@ -41,5 +53,8 @@ export const mutations = {
     },
     setMode(state, val) {
         state.mode = val
+    },
+    setDashDir(state, val) {
+        state.dashDir = val
     }
 };

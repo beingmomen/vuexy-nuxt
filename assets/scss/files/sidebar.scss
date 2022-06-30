@@ -1,0 +1,27 @@
+@import "/@core/scss/base/core/menu/menu-types/vertical-menu.scss";
+
+.menu-hide .main-menu {
+  width: 0 !important;
+}
+.menu-hide.menu-open .main-menu {
+  width: 260px !important;
+}
+
+.menu-collapsed .has-sub.open .menu-content .active {
+  box-shadow: none;
+  a {
+    background: #fff !important;
+  }
+}
+
+.menu-collapsed .expanded .has-sub.open .menu-content .active {
+  box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+  background: linear-gradient(
+    118deg,
+    #7367f0,
+    rgba(115, 103, 240, 0.7)
+  ) !important;
+  a {
+    background: unset !important;
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <li class="navigation-header text-truncate">
-    <span>Apps &amp; Pages</span>
+    <span>{{ $t("sidebar.apps") }} &amp; {{ $t("sidebar.pages") }}</span>
     <more-horizontal-icon
       size="1.5x"
       class="custom-class"
