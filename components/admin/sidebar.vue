@@ -11,7 +11,10 @@
     <div class="navbar-header expanded">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mr-auto">
-          <nuxt-link to="/dashboard" class="navbar-brand router-link-active">
+          <nuxt-link
+            :to="localePath('/dashboard')"
+            class="navbar-brand router-link-active"
+          >
             <span class="brand-logo">
               <img src="/img/logo.svg" alt="logo" />
             </span>
@@ -38,19 +41,19 @@
       <ul class="navigation navigation-main">
         <MainSidebarLink
           :name="$t(`sidebar.dashboard`)"
-          route="dashboard"
+          route="/dashboard"
           icon="fa-house"
         />
         <MainSidebarBreakLink />
         <MainSidebarLink
           :name="$t(`sidebar.email`)"
-          route="dashboard/email"
+          route="/dashboard/email"
           icon="fa-envelope"
         />
         <MainSidebarGroupLink
           :page="$t(`sidebar.eCommerce`)"
           :childNumber="true"
-          :child="dashboardChild"
+          :child="returnDashboardChild"
           icon="fa-cart-shopping"
         />
       </ul>
@@ -65,16 +68,17 @@ export default {
   data() {
     return {
       hover: false,
-      dashboardChild: [
-        { name: this.$t("sidebar.eCommerce"), route: "dashboard/eCommerce" },
-        { name: this.$t("sidebar.analytics"), route: "dashboard/analytics" },
-      ],
-      invoiceChild: [
-        { name: "List", route: "list" },
-        { name: "Preview", route: "preview" },
-      ],
       isOpen: false,
     };
+  },
+  computed: {
+    returnDashboardChild() {
+      let arr = [
+        { name: this.$t("sidebar.eCommerce"), route: "/dashboard/eCommerce" },
+        { name: this.$t("sidebar.analytics"), route: "/dashboard/analytics" },
+      ];
+      return arr;
+    },
   },
   components: {
     XIcon,

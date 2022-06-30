@@ -50,19 +50,22 @@
               v-for="locale in availableLocales"
               :key="locale.code"
             >
-              <b-img
-                :src="require(`/assets/images/flags/${locale.code}.png`)"
-                height="14px"
-                width="22px"
-                alt=""
-              />
               <nuxt-link
-                class="lang-name"
+                class="lang-name d-flex align-items-center cursor-pointer"
                 to=""
                 @click.native="
                   switchLang(locale.code), $i18n.setLocale(locale.code)
                 "
-                >{{ locale.code | languageName }}</nuxt-link
+              >
+                <b-img
+                  :src="require(`/assets/images/flags/${locale.code}.png`)"
+                  height="20px"
+                  width="32px"
+                  alt=""
+                />
+                <p class="mb-0 ms-2 cursor-pointer">
+                  {{ locale.code | languageName }}
+                </p></nuxt-link
               >
             </b-dropdown-item>
           </b-nav-item-dropdown>

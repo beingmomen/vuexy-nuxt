@@ -2,9 +2,14 @@ import Vue from 'vue'
 
 const mixins = {
     data() {
-        return {}
+        return {
+            passwordFieldType: 'password',
+        }
     },
     computed: {
+        togglePasswordVisibility() {
+            this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+        },
         makeLayoutCollapsed() {
             return this.$store.getters["getLayoutCollapsed"]
         },
@@ -14,7 +19,7 @@ const mixins = {
         dashboardMode() {
             return this.$store.getters["getMode"]
         },
-        dashDirection() {
+        dashDir() {
             return this.$store.getters["getDashDir"]
         }
     },

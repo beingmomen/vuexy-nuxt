@@ -26,15 +26,15 @@ export default {
         name: 'my-page',
         mode: 'out-in',
         beforeEnter(el) {
-            console.warn('Before enter...');
+            // console.warn('Before enter...');
         }
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
+        '~/assets/css/bootstrap.min.css',
         '~/@core/scss/core.scss',
         '@fortawesome/fontawesome-svg-core/styles.css',
-        '~/assets/css/bootstrap.min.css',
         // '~/assets/css/bootstrap.rtl.min.css',
         '~/assets/scss/rtl.scss',
         '~/assets/scss/style.scss',
@@ -42,11 +42,9 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/components/fontawesome.js',
-        "~plugins/components/vee-validate.js",
-        '~/plugins/mixins/ui/forms.js',
-        '~/plugins/mixins/ui/transition.js',
-        '~/plugins/mixins/ui/layout.js',
+        '~/plugins/settings/fontawesome.js',
+        "~/plugins/settings/vee-validate.js",
+        '~/plugins/settings/layout.js',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -78,21 +76,12 @@ export default {
     i18n: {
         lazy: true,
         langDir: 'locales/',
-        strategy: 'no_prefix',
+        // strategy: 'no_prefix',   use it when tou won’t prefix in route 
         locales: [
-            { code: 'en', iso: 'en-US', file: 'en', dir: 'ltr' },
             { code: 'ar', iso: 'ar-EG', file: 'ar', dir: 'rtl' },
+            { code: 'en', iso: 'en-US', file: 'en', dir: 'ltr' },
         ],
-        defaultLocale: 'ar',
-        // parsePages: false,
-        // pages: {
-        //     dashboard: false
-        // },
-        // detectBrowserLanguage: {
-        //     useCookie: true,
-        //     cookieKey: 'i18n_redirected',
-        //     redirectOn: 'root',  // recommended
-        // }
+        defaultLocale: 'en',
 
     },
 
