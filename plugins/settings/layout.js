@@ -7,9 +7,6 @@ const mixins = {
         }
     },
     computed: {
-        togglePasswordVisibility() {
-            this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
-        },
         makeLayoutCollapsed() {
             return this.$store.getters["getLayoutCollapsed"]
         },
@@ -24,7 +21,11 @@ const mixins = {
         }
     },
 
-    methods: {},
+    methods: {
+        togglePasswordVisibility() {
+            this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+        },
+    },
 };
 
 Vue.mixin(mixins);

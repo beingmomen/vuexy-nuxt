@@ -3,7 +3,7 @@
     <b-row class="auth-inner m-0">
       <!-- Brand logo-->
       <b-link class="brand-logo">
-        <MainLogo />
+        <img src="/img/logo.svg" alt="logo" />
         <h2 class="brand-text text-primary ml-1">Vuexy</h2>
       </b-link>
       <!-- /Brand logo-->
@@ -39,15 +39,7 @@
                   ><span class="font-weight-bold"
                     >{{ $t("login.admin") }}:</span
                   >
-                  admin@demo.com | admin</small
-                >
-              </p>
-              <p>
-                <small class="mr-50"
-                  ><span class="font-weight-bold"
-                    >{{ $t("login.client") }}:</span
-                  >
-                  client@demo.com | client</small
+                  admin@admin.com | password</small
                 >
               </p>
             </div>
@@ -95,7 +87,7 @@
                     <label for="login-password">{{
                       $t("inputs.password")
                     }}</label>
-                    <nuxt-link :to="{ name: 'auth-forgot-password' }">
+                    <nuxt-link to="/auth/forgot-password">
                       <small>{{ $t("inputs.forget") }}</small>
                     </nuxt-link>
                   </div>
@@ -139,7 +131,7 @@
 
           <b-card-text class="text-center mt-3">
             <span>{{ $t("login.new_platform") }} </span>
-            <nuxt-link :to="{ name: 'auth-register' }">
+            <nuxt-link to="/auth/register">
               <span>{{ $t("login.new_account") }}</span>
             </nuxt-link>
           </b-card-text>
@@ -153,6 +145,7 @@
 import { HelpCircleIcon, EyeIcon, CoffeeIcon } from "vue-feather-icons";
 
 export default {
+  name: "login",
   layout: "auth",
   data() {
     return {

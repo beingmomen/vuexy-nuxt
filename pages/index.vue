@@ -10,7 +10,7 @@
   >
     <p class="fs-1 fw-bold">Landing Page</p>
     <b-button variant="primary">
-      <nuxt-link to="/dashboard">Dashboard</nuxt-link>
+      <nuxt-link to="/dashboard" class="text-white">Dashboard</nuxt-link>
     </b-button>
   </div>
 </template>
