@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AdminFonts />
+    <SettingsFonts />
     <div
       v-show="loading"
       class="
@@ -18,11 +18,11 @@
         'menu-open': toggleSidebar,
       }"
     >
-      <AdminNavbar :width="window.width" />
-      <AdminSidebar :width="window.width" />
+      <SettingsNavbar :width="window.width" />
+      <SettingsSidebar :width="window.width" />
       <div class="sidenav-overlay"></div>
       <Nuxt />
-      <AdminFooter />
+      <SettingsFooter />
     </div>
     <div v-show="!loading" class="flower-spinner">
       <div class="dots-container">
@@ -38,6 +38,11 @@
 export default {
   middleware: ["mode", "lang", "authentication"],
   mounted() {
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("menu-open")) {
+        this.$store.dispatch("hideSidebar");
+      }
+    });
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
 

@@ -1,32 +1,19 @@
 <template>
-  <b-col :lg="lg" :md="md" :sm="sm" class="mt-1">
+  <b-col :lg="lg" :md="md" :sm="sm" class="mb-1">
     <b-form-group>
-      <label :class="required ? 'required' : ''">{{ title }}</label>
-      <b-input-group
-        class="mb-1"
-        :class="{ 'flex-row-reverse': dashDir == 'rtl' }"
-      >
-        <b-form-input
-          style="height: 35px"
-          id="example-input"
-          v-model="getContent"
-          type="text"
-          placeholder="YYYY-MM-DD"
-          autocomplete="off"
-          show-decade-nav
-        />
-        <b-input-group-append style="height: 35px">
-          <b-form-datepicker
-            v-model="getContent"
-            show-decade-nav
-            button-only
-            right
-            locale="en-US"
-            aria-controls="example-input"
-            @context="onContext"
-          />
-        </b-input-group-append>
-      </b-input-group>
+      <label :class="required ? 'required' : ''"> {{ label }}</label>
+      <!-- <b-form-input
+        style="height: 35px"
+        v-model="getContent"
+        :disabled="disabled"
+      /> -->
+      <b-form-file
+        style="height: 35px"
+        v-model="getContent"
+        placeholder="Choose a file or drop it here..."
+        drop-placeholder="Drop file here..."
+        :disabled="disabled"
+      />
     </b-form-group>
   </b-col>
 </template>
@@ -34,10 +21,14 @@
 <script>
 export default {
   props: {
-    title: String,
+    label: String,
     module: String,
     storeKey: String,
     required: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -54,6 +45,10 @@ export default {
       default: "12",
     },
   },
+  mounted() {},
+  data() {
+    return {};
+  },
   computed: {
     getContent: {
       get: function () {
@@ -66,9 +61,6 @@ export default {
         });
       },
     },
-  },
-  methods: {
-    onContext() {},
   },
 };
 </script>

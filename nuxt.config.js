@@ -45,6 +45,7 @@ export default {
         '~/plugins/settings/fontawesome.js',
         "~/plugins/settings/vee-validate.js",
         '~/plugins/settings/layout.js',
+        '~/plugins/settings/firebase.js',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,6 +64,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/auth-next',
         "@nuxtjs/i18n",
+        'nuxt-vue-select',
         'cookie-universal-nuxt', [
             "vue-toastification/nuxt",
             {
@@ -110,6 +112,27 @@ export default {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
         baseURL: '/',
     },
+
+    pwa: {
+        icon: {
+            fileName: 'code.png',
+        },
+        manifest: {
+            name: 'Abdelmo’men Portfolio',
+            short_name: 'Abdelmo’men',
+            lang: 'en',
+            display: 'standalone',
+        },
+    },
+
+    generate: {
+        fallback: true
+    },
+
+    // loading: {
+    //     color: ' #7367f0',
+    //     height: '4px'
+    // },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
