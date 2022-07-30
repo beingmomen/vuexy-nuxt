@@ -5,7 +5,7 @@
       <b-link class="brand-logo">
         <img src="/img/logo.svg" alt="logo" />
 
-        <h2 class="brand-text text-primary ml-1">Vuexy</h2>
+        <h2 class="brand-text text-primary ml-1">Bline Orders</h2>
       </b-link>
       <!-- /Brand logo-->
 
@@ -34,21 +34,39 @@
           </b-card-text>
 
           <!-- form -->
-          <validation-observer ref="registerForm">
+          <validation-observer ref="form">
             <b-form class="auth-register-form mt-2">
-              <!-- username -->
-              <b-form-group label="Username" label-for="register-username">
+              <!-- name -->
+              <b-form-group label="Name" label-for="register-name">
                 <validation-provider
                   #default="{ errors }"
-                  name="Username"
+                  name="Name"
                   rules="required"
                 >
                   <b-form-input
-                    id="register-username"
-                    v-model="username"
-                    name="register-username"
+                    id="register-name"
+                    v-model="form.name"
+                    name="register-name"
                     :state="errors.length > 0 ? false : null"
                     placeholder="johndoe"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- Phone Number -->
+              <b-form-group label="Phone Number" label-for="phone-number">
+                <validation-provider
+                  #default="{ errors }"
+                  name="Phone Number"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="phone-number"
+                    v-model="form.phone"
+                    name="phone-number"
+                    :state="errors.length > 0 ? false : null"
+                    placeholder="+20**********"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -63,7 +81,7 @@
                 >
                   <b-form-input
                     id="register-email"
-                    v-model="userEmail"
+                    v-model="form.email"
                     name="register-email"
                     :state="errors.length > 0 ? false : null"
                     placeholder="john@example.com"
@@ -85,7 +103,7 @@
                   >
                     <b-form-input
                       id="register-password"
-                      v-model="password"
+                      v-model="form.password"
                       class="form-control-merge"
                       :type="passwordFieldType"
                       :state="errors.length > 0 ? false : null"
@@ -103,11 +121,80 @@
                 </validation-provider>
               </b-form-group>
 
+              <!-- governorates -->
+              <b-form-group
+                label-for="register-governorates"
+                label="governorates"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="governorates"
+                  rules="required"
+                >
+                  <v-select
+                    style="height: 35px"
+                    v-model="form.city_id"
+                    :reduce="(item) => item.id"
+                    label="name"
+                    :dir="dashDir"
+                    :clearable="false"
+                    :options="[
+                      { id: 0, name: 'Choose' },
+                      ...getListForAllGovernorates,
+                    ]"
+                  ></v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- areas -->
+              <b-form-group label-for="register-areas" label="areas">
+                <validation-provider
+                  #default="{ errors }"
+                  name="areas"
+                  rules="required"
+                >
+                  <v-select
+                    style="height: 35px"
+                    v-model="form.area_id"
+                    :reduce="(item) => item.id"
+                    label="name"
+                    :dir="dashDir"
+                    :clearable="false"
+                    :disabled="form.city_id ? false : true"
+                    :options="[
+                      { id: 0, name: 'Choose' },
+                      ...getListForAllAreas,
+                    ]"
+                  ></v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- Address -->
+              <b-form-group label="Address" label-for="address">
+                <validation-provider
+                  #default="{ errors }"
+                  name="Address"
+                  rules="required"
+                >
+                  <b-form-textarea
+                    id="address"
+                    v-model="form.address"
+                    name="address"
+                    placeholder="Street ST."
+                    rows="3"
+                    max-rows="6"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
               <b-button
                 variant="primary"
                 block
                 type="submit"
-                @click.prevent="validationForm"
+                @click.prevent="signUp"
               >
                 Sign up
               </b-button>
@@ -120,26 +207,6 @@
               <span>&nbsp;Sign in instead</span>
             </b-link>
           </p>
-
-          <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">or</div>
-          </div>
-
-          <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button variant="facebook" href="javascript:void(0)">
-              <!-- <feather-icon icon="FacebookIcon" /> -->
-            </b-button>
-            <b-button variant="twitter" href="javascript:void(0)">
-              <!-- <feather-icon icon="TwitterIcon" /> -->
-            </b-button>
-            <b-button variant="google" href="javascript:void(0)">
-              <!-- <feather-icon icon="MailIcon" /> -->
-            </b-button>
-            <b-button variant="github" href="javascript:void(0)">
-              <!-- <feather-icon icon="GithubIcon" /> -->
-            </b-button>
-          </div>
         </b-col>
       </b-col>
       <!-- /Register-->
@@ -152,15 +219,72 @@ import { EyeIcon } from "vue-feather-icons";
 export default {
   name: "register",
   layout: "auth",
+  async asyncData({ $axios, store }) {
+    await $axios
+      .$get(`/cities/list`)
+      .then((res) => {
+        store.dispatch("admin/governorates/getAllDataFromApi", res);
+      })
+      .catch((err) => console.warn("err :::", err.response));
+    return {};
+  },
   data() {
     return {
-      username: "",
-      userEmail: "",
-      password: "",
+      form: {
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+        city_id: 0,
+        area_id: 0,
+        address: "",
+      },
+      disabledArea: null,
     };
   },
   components: {
     EyeIcon,
+  },
+  methods: {
+    signUp() {
+      this.$refs.form.validate().then((res) => {
+        let data = {};
+        for (const [key, value] of Object.entries(this.form)) {
+          if (value) {
+            data[key] = value;
+          }
+        }
+        if (res) {
+          this.$axios
+            .$post("/register", data)
+            .then((res) => {
+              this.$toast.success("تم التسجيل بنجاح");
+              if (res.success) {
+                this.$router.push("/login");
+              }
+            })
+            .catch((err) => {
+              this.$store.dispatch("handleError", err.response.data.errors, {
+                root: true,
+              });
+            });
+        }
+      });
+    },
+  },
+  watch: {
+    async "form.city_id"(newValue, oldValue) {
+      let arr = [];
+      await this.$axios
+        .$get(`/areas/list`)
+        .then((res) => {
+          res.data.forEach((x) => {
+            newValue == x.city.id ? arr.push(x) : "";
+          });
+          this.$store.dispatch("admin/areas/getAllDataFromApi", { data: arr });
+        })
+        .catch((err) => console.warn("err :::", err.response));
+    },
   },
 };
 </script>

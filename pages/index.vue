@@ -10,7 +10,9 @@
   >
     <p class="fs-1 fw-bold">Landing Page</p>
     <b-button variant="primary">
-      <nuxt-link to="/dashboard" class="text-white">Dashboard</nuxt-link>
+      <nuxt-link :to="localePath('/dashboard')" class="text-white"
+        >Dashboard</nuxt-link
+      >
     </b-button>
     <!-- <input v-model="obj.title" placeholder="title" type="text" />
     <input v-model="obj.author" placeholder="author" type="text" />

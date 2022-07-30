@@ -40,7 +40,19 @@ export const actions = {
         } else {
             commit("setDashDir", "ltr")
         }
-    }
+    },
+    showSuccessMsg({ }, payload) {
+        this.$toast.success(payload);
+    },
+    handleError({ }, payload) {
+        let errors = []
+        for (const [key, value] of Object.entries(payload)) {
+            errors.push(...value)
+        }
+        errors.forEach(el => {
+            this.$toast.error(el);
+        });
+    },
 
 };
 

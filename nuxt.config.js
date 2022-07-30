@@ -1,7 +1,7 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'Vuxy-Nuxt',
+        title: 'Bline Orders',
         htmlAttrs: {
             lang: 'en',
             dir: "ltr",
@@ -46,6 +46,10 @@ export default {
         "~/plugins/settings/vee-validate.js",
         '~/plugins/settings/layout.js',
         '~/plugins/settings/firebase.js',
+        '~/plugins/mixins/admin/index.js',
+        '~/plugins/mixins/admin/admins/index.js',
+        '~/plugins/mixins/admin/governorates/index.js',
+        '~/plugins/mixins/admin/areas/index.js',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -91,11 +95,15 @@ export default {
         strategies: {
             local: {
                 token: {
-                    property: 'idToken',
+                    property: 'data',
+                },
+                user: {
+                    property: 'data',
                 },
                 endpoints: {
-                    login: { url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAd81BzrVH1na5-xuVw5sBT9at4rqjIBkE`, method: "post" },
-                    user: false
+                    login: { url: `/login`, method: "post" },
+                    user: { url: `/user`, method: "get" },
+                    // user: false
                 },
             },
         },
@@ -110,7 +118,7 @@ export default {
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-        baseURL: '/',
+        baseURL: 'http://127.0.0.1:8000/api',
     },
 
     pwa: {
@@ -118,8 +126,8 @@ export default {
             fileName: 'code.png',
         },
         manifest: {
-            name: 'Abdelmo’men Portfolio',
-            short_name: 'Abdelmo’men',
+            name: 'Bline Orders',
+            short_name: 'Bline Orders',
             lang: 'en',
             display: 'standalone',
         },

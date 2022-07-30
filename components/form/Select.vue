@@ -1,20 +1,24 @@
 <template>
   <b-col :sm="sm" :md="md" :lg="lg" class="mt-1">
-    <b-form-group>
-      <label v-if="title != 'hid'" :class="{ required: required }">{{
-        title
-      }}</label>
-      <v-select
-        style="height: 35px"
-        v-model="getContent"
-        :reduce="(item) => (notId ? item : item.id)"
-        :label="label"
-        :dir="dashDir"
-        :clearable="clearable"
-        :options="allData"
-        :disabled="disabled"
-      ></v-select>
-    </b-form-group>
+    <validation-provider #default="{ errors }" :name="title" rules="required">
+      <b-form-group :state="errors.length > 0 ? false : null">
+        <label v-if="title != 'hid'" :class="{ required: required }">{{
+          title
+        }}</label>
+        <v-select
+          style="height: 35px"
+          v-model="getContent"
+          :reduce="(item) => (notId ? item : item.id)"
+          :label="label"
+          :dir="dashDir"
+          :clearable="clearable"
+          :options="allData"
+          :disabled="disabled"
+          :placeholder="placeHolder"
+        ></v-select>
+        <small class="text-danger">{{ errors[0] }}</small>
+      </b-form-group>
+    </validation-provider>
   </b-col>
 </template>
 
@@ -30,6 +34,7 @@ export default {
     storeKey: String,
     allData: Array,
     module: String,
+    placeHolder: String,
     multiple: {
       type: Boolean,
       default: false,
@@ -72,10 +77,7 @@ export default {
         return this.$store.getters[`${this.module}/get${this.storeKey}`];
       },
       set(val) {
-        this.$store.commit(`${this.module}/set${this.storeKey}`, {
-          key: this.storeKey,
-          value: val,
-        });
+        this.$store.commit(`${this.module}/set${this.storeKey}`, val);
       },
     },
   },

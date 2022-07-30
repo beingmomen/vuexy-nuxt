@@ -18,7 +18,7 @@
             <span class="brand-logo">
               <img src="/img/logo.svg" alt="logo" />
             </span>
-            <h2 class="brand-text">Vuexy</h2>
+            <h2 class="brand-text">Bline Orders</h2>
           </nuxt-link>
         </li>
         <li class="nav-item nav-toggle">
@@ -46,16 +46,41 @@
         />
         <MainSidebarBreakLink />
         <MainSidebarLink
-          :name="$t(`sidebar.email`)"
-          route="/dashboard/email"
-          icon="fa-envelope"
+          :name="$t(`sidebar.admins`)"
+          route="/dashboard/admins"
+          icon="fa-user"
         />
-        <MainSidebarGroupLink
-          :page="$t(`sidebar.eCommerce`)"
-          :childNumber="true"
-          :child="returnDashboardChild"
-          icon="fa-cart-shopping"
+        <MainSidebarLink
+          :name="$t(`sidebar.sellers`)"
+          route="/dashboard/sellers"
+          icon="fa-user-group"
         />
+        <MainSidebarLink
+          :name="$t(`sidebar.drivers`)"
+          route="/dashboard/drivers"
+          icon="fa-truck"
+        />
+        <MainSidebarLink
+          :name="$t(`sidebar.cities`)"
+          route="/dashboard/cities"
+          icon="fa-flag"
+        />
+        <MainSidebarLink
+          :name="$t(`sidebar.areas`)"
+          route="/dashboard/areas"
+          icon="fa-layer-group"
+        />
+        <MainSidebarLink
+          :name="$t(`sidebar.order_statuses`)"
+          route="/dashboard/order-statuses"
+          icon="fa-list"
+        />
+        <!-- <MainSidebarBreakLink />
+        <MainSidebarLink
+          :name="$t(`sidebar.settings`)"
+          route="/dashboard/settings"
+          icon="fa-gear"
+        /> -->
       </ul>
     </div>
   </div>

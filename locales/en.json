@@ -10,9 +10,13 @@
   },
   "sidebar": {
     "dashboard": "Dashboard",
-    "email": "Email",
-    "eCommerce": "eCommerce",
-    "analytics": "Analytics",
+    "admins": "Admins",
+    "sellers": "Sellers",
+    "drivers": "Drivers",
+    "cities": "Cities",
+    "areas": "Areas",
+    "order_statuses": "Order Statuses",
+    "settings": "settings",
     "apps": "Apps",
     "pages": "Pages"
   },
@@ -34,13 +38,40 @@
   "inputs": {
     "email": "ُEmail",
     "password": "Password",
-    "forget": "Forgot Password?"
+    "forget": "Forgot Password?",
+    "search": "Search",
+    "all": "All",
+    "name": "Name",
+    "address": "Address",
+    "phone": "Phone",
+    "area": "Area",
+    "city": "City"
+  },
+  "modals": {
+    "delete_msg": "Are You Sure To Delete This Item",
+    "delete_confirm": "Confirm To Delete"
   },
   "buttons": {
     "login": "Sign in",
-    "logout": "Sign Up"
+    "logout": "Sign Up",
+    "add": "Add",
+    "edit": "Edit",
+    "clear": "Clear",
+    "yes": "Yes",
+    "no": "No"
   },
   "tables": {
-    "per_page": "Per Page"
+    "per_page": "Per Page",
+    "name": "Name",
+    "phone": "Phone",
+    "city": "City",
+    "address": "Address",
+    "email": "Email",
+    "actions": "Actions"
+  },
+  "msg": {
+    "add": "Added Successfully",
+    "edit": "Edited Successfully",
+    "delete": "Deleted Successfully"
   }
 }

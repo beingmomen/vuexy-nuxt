@@ -1,12 +1,16 @@
 <template>
   <b-col :lg="lg" :md="md" :sm="sm" class="mt-1">
     <b-form-group>
-      <label :class="required ? 'required' : ''"> {{ label }}</label>
-      <b-form-input
-        style="height: 35px"
-        v-model="getContent"
-        :disabled="disabled"
-      />
+      <validation-provider #default="{ errors }" :name="label" :rules="rule">
+        <label :class="required ? 'required' : ''"> {{ label }}</label>
+        <b-form-input
+          style="height: 35px"
+          v-model="getContent"
+          :disabled="disabled"
+          :type="type"
+        />
+        <small class="text-danger">{{ errors[0] }}</small>
+      </validation-provider>
     </b-form-group>
   </b-col>
 </template>
@@ -20,6 +24,14 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+    rule: {
+      type: String,
+      default: "required",
+    },
+    type: {
+      type: String,
+      default: "text",
     },
     disabled: {
       type: Boolean,
@@ -44,10 +56,7 @@ export default {
         return this.$store.getters[`${this.module}/get${this.storeKey}`];
       },
       set(val) {
-        this.$store.commit(`${this.module}/set${this.storeKey}`, {
-          key: this.storeKey,
-          value: val,
-        });
+        this.$store.commit(`${this.module}/set${this.storeKey}`, val);
       },
     },
   },
