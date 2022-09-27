@@ -47,7 +47,6 @@
         <MainSidebarBreakLink />
         <MainSidebarLink
           :name="$t(`sidebar.admins`)"
-<<<<<<< HEAD
           route="/dashboard/email"
           icon="fa-envelope"
         />
@@ -56,15 +55,6 @@
           :childNumber="true"
           :child="returnDashboardChild"
           icon="fa-cart-shopping"
-=======
-          route="/dashboard/admins"
-          icon="fa-user"
-        />
-        <MainSidebarLink
-          :name="$t(`sidebar.sellers`)"
-          route="/dashboard/sellers"
-          icon="fa-user-group"
->>>>>>> 26c280147483cc027b133973d8124291a0fab427
         />
         <MainSidebarLink
           :name="$t(`sidebar.drivers`)"
