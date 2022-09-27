@@ -49,13 +49,13 @@
             <b-dropdown-item
               v-for="locale in availableLocales"
               :key="locale.code"
+              @click.native="
+                switchLang(locale.code), $i18n.setLocale(locale.code)
+              "
             >
               <nuxt-link
                 class="lang-name d-flex align-items-center cursor-pointer"
                 to=""
-                @click.native="
-                  switchLang(locale.code), $i18n.setLocale(locale.code)
-                "
               >
                 <b-img
                   :src="require(`/assets/images/flags/${locale.code}.png`)"

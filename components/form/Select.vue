@@ -1,20 +1,25 @@
 <template>
   <b-col :sm="sm" :md="md" :lg="lg" class="mt-1">
-    <b-form-group>
-      <label v-if="title != 'hid'" :class="{ required: required }">{{
-        title
-      }}</label>
-      <v-select
-        style="height: 35px"
-        v-model="getContent"
-        :reduce="(item) => (notId ? item : item.id)"
-        :label="label"
-        :dir="dashDir"
-        :clearable="clearable"
-        :options="allData"
-        :disabled="disabled"
-      ></v-select>
-    </b-form-group>
+    <validation-provider #default="{ errors }" :name="title" rules="required">
+      <b-form-group>
+        <label v-if="title != 'hid'" :class="{ required: required }">{{
+          title
+        }}</label>
+        <v-select
+          style="height: 35px"
+          v-model="getContent"
+          :reduce="(item) => (notId ? item : item.id)"
+          :label="label"
+          :dir="dashDir"
+          :clearable="clearable"
+          :options="getAutoList"
+          :disabled="disabled"
+          :placeholder="placeHolder"
+          @input="$emit('changeData')"
+        ></v-select>
+        <small class="text-danger">{{ errors[0] }}</small>
+      </b-form-group>
+    </validation-provider>
   </b-col>
 </template>
 
@@ -28,8 +33,12 @@ export default {
     },
     label: String,
     storeKey: String,
-    allData: Array,
     module: String,
+    listKey: String,
+    placeHolder: {
+      type: String,
+      default: "غير محدد",
+    },
     multiple: {
       type: Boolean,
       default: false,
@@ -77,6 +86,9 @@ export default {
           value: val,
         });
       },
+    },
+    getAutoList() {
+      return this.$store.getters[`${this.module}/get${this.listKey}`];
     },
   },
 };

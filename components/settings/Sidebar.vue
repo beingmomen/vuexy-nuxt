@@ -46,12 +46,12 @@
         />
         <MainSidebarBreakLink />
         <MainSidebarLink
-          :name="$t(`sidebar.email`)"
+          :name="$t(`sidebar.admins`)"
           route="/dashboard/email"
           icon="fa-envelope"
         />
         <MainSidebarGroupLink
-          :page="$t(`sidebar.eCommerce`)"
+          :page="$t(`sidebar.apps`)"
           :childNumber="true"
           :child="returnDashboardChild"
           icon="fa-cart-shopping"
@@ -74,8 +74,8 @@ export default {
   computed: {
     returnDashboardChild() {
       let arr = [
-        { name: this.$t("sidebar.eCommerce"), route: "/dashboard/eCommerce" },
-        { name: this.$t("sidebar.analytics"), route: "/dashboard/analytics" },
+        { name: this.$t("sidebar.settings"), route: "/dashboard/eCommerce" },
+        { name: this.$t("sidebar.pages"), route: "/dashboard/analytics" },
       ];
       return arr;
     },

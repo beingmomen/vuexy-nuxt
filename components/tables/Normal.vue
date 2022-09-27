@@ -18,7 +18,7 @@
       <b-form-group
         label="Filter"
         label-cols-sm="3"
-        label-align-sm="right" 
+        label-align-sm="right"
         label-size="sm"
         label-for="filterInput"
         class="mb-0"
@@ -64,6 +64,20 @@
             {{ status[0][data.value] }}
           </b-badge>
         </template>
+
+        <template #cell(actions)="data">
+          <nuxt-link :to="$route.path + '/' + data.item.id">
+            <edit-icon
+              size="1.5x"
+              class="custom-class text-primary"
+            ></edit-icon>
+          </nuxt-link>
+          <trash-icon
+            @click="showMsgBoxTwo(data)"
+            size="1.5x"
+            class="custom-clas mr-50 text-danger"
+          ></trash-icon>
+        </template>
       </b-table>
     </b-col>
 
@@ -81,6 +95,8 @@
 </template>
 
 <script>
+import { MoreVerticalIcon, EditIcon, TrashIcon } from "vue-feather-icons";
+
 export default {
   props: ["headers", "items"],
   data() {
@@ -131,6 +147,28 @@ export default {
     this.totalRows = this.items.length;
   },
   methods: {
+    showMsgBoxTwo(data) {
+      console.warn("data :::", data.item.id);
+      this.$bvModal
+        .msgBoxConfirm(`${this.$t("modals.delete_msg")}( ${data.item.id} )`, {
+          title: this.$t("modals.delete_confirm"),
+          size: "sm",
+          okVariant: "primary",
+          okTitle: this.$t("buttons.yes"),
+          cancelTitle: this.$t("buttons.no"),
+          cancelVariant: "outline-secondary",
+          hideHeaderClose: false,
+          centered: false,
+        })
+        .then((value) => {
+          value
+            ? this.$emit("deleteItem", {
+                id: data.item.id,
+                page: this.currentPage,
+              })
+            : "";
+        });
+    },
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`;
       this.infoModal.content = JSON.stringify(item, null, 2);
@@ -145,6 +183,11 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+  },
+  components: {
+    MoreVerticalIcon,
+    EditIcon,
+    TrashIcon,
   },
 };
 </script>

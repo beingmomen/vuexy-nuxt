@@ -2,7 +2,7 @@
   <div class="app-content content">
     <CardsNormalCard />
     <CardsLargeCard :items="statisticsItems" />
-    <TablesNormalTable :headers="tableHeader" :items="tableItems" />
+    <TablesNormal :headers="tableHeader" :items="tableItems" />
   </div>
 </template>
 
@@ -60,6 +60,11 @@ export default {
         "age",
         "experience",
         { key: "status", label: "Status", sortable: true },
+        {
+          key: "actions",
+          label: this.$t("tables.actions"),
+          sortable: false,
+        },
       ],
       tableItems: [
         {
