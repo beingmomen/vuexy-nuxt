@@ -94,8 +94,11 @@
           >
             <template #button-content>
               <div class="d-sm-flex d-none user-nav">
-                <p class="user-name font-weight-bolder mb-0">Abdelmomen</p>
-                <span class="user-status">{{ $t("navbar.admin") }}</span>
+                <p class="user-name font-weight-bolder mb-0">
+                  {{ $auth.user.name }}
+                </p>
+                <span class="user-status">{{ $auth.user.type }}</span>
+                <!-- <span class="user-status">{{ $t("navbar.admin") }}</span> -->
               </div>
               <b-avatar
                 size="40"

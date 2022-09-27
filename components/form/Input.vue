@@ -56,10 +56,7 @@ export default {
         return this.$store.getters[`${this.module}/get${this.storeKey}`];
       },
       set(val) {
-        this.$store.commit(`${this.module}/set${this.storeKey}`, {
-          key: this.storeKey,
-          value: val,
-        });
+        this.$store.commit(`${this.module}/set${this.storeKey}`, val);
       },
     },
   },

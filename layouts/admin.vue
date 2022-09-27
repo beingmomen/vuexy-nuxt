@@ -22,7 +22,7 @@
       <SettingsSidebar :width="window.width" />
       <div class="sidenav-overlay"></div>
       <Nuxt />
-      <SettingsFooter />
+      <!-- <SettingsFooter /> -->
     </div>
     <div v-show="!loading" class="flower-spinner">
       <div class="dots-container">
@@ -36,6 +36,7 @@
 
 <script>
 export default {
+  name: "admin",
   middleware: ["mode", "lang", "authentication"],
   mounted() {
     document.addEventListener("click", (e) => {

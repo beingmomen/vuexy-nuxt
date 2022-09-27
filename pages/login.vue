@@ -4,7 +4,7 @@
       <!-- Brand logo-->
       <b-link class="brand-logo">
         <img src="/img/logo.svg" alt="logo" />
-        <h2 class="brand-text text-primary ml-1">Vuexy</h2>
+        <h2 class="brand-text text-primary ml-1">Bline Orders</h2>
       </b-link>
       <!-- /Brand logo-->
 
@@ -31,25 +31,6 @@
           <b-card-text class="mb-2">
             {{ $t("login.please") }}
           </b-card-text>
-
-          <b-alert variant="primary" show>
-            <div class="alert-body font-small-2">
-              <p>
-                <small class="mr-50"
-                  ><span class="font-weight-bold"
-                    >{{ $t("login.admin") }}:</span
-                  >
-                  admin@admin.com | password</small
-                >
-              </p>
-            </div>
-            <help-circle-icon
-              v-b-tooltip.hover.left="`${$t('login.tooltip')}`"
-              style="top: 10; right: 10"
-              size="1.5x"
-              class="custom-class position-absolute"
-            ></help-circle-icon>
-          </b-alert>
 
           <!-- form -->
           <ValidationObserver v-slot="{ handleSubmit, invalid }">
@@ -150,8 +131,8 @@ export default {
   data() {
     return {
       login: {
-        email: "admin@admin.com",
-        password: "password",
+        email: "momen@admin.com",
+        password: "fuck",
       },
     };
   },
@@ -164,7 +145,7 @@ export default {
 
         let position = this.$i18n.locale == "en" ? "top-right" : "top-left";
 
-        this.$toast(`Welcome ${res.data.email}`, {
+        this.$toast(`Welcome ${this.$auth.user.name}`, {
           hideProgressBar: true,
           position,
           icon: CoffeeIcon,
@@ -172,7 +153,7 @@ export default {
           showCloseButtonOnHover: true,
         });
       } catch (err) {
-        this.$toast.error(err.response.data.error.message);
+        this.$toast.error(err.response.data.message);
       }
     },
   },

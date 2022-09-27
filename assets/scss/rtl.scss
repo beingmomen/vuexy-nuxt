@@ -99,6 +99,22 @@
           right: unset !important;
           left: 37px !important;
         }
+        .custome-search-input {
+          .filter-input {
+            border-top-right-radius: 0.357rem !important;
+            border-bottom-right-radius: 0.357rem !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+          }
+          .input-group-append {
+            button {
+              border-top-left-radius: 0.357rem !important;
+              border-bottom-left-radius: 0.357rem !important;
+              border-top-right-radius: 0 !important;
+              border-bottom-right-radius: 0 !important;
+            }
+          }
+        }
       }
       .footer {
         margin-right: 260px;
@@ -127,7 +143,8 @@
       .brand-logo {
         left: unset;
         right: 2rem;
-        width: 185px;
+        // width: 185px;
+        width: 255px;
         img {
           width: 60px;
         }
@@ -166,6 +183,19 @@
         .page-link {
           border-radius: 5rem !important;
         }
+      }
+    }
+
+    .modal-content {
+      .modal-header {
+        .close {
+          margin-left: -1.4rem !important;
+          margin-right: auto !important;
+          transform: translate(-8px, -2px);
+        }
+      }
+      .modal-body {
+        text-align: right !important;
       }
     }
   }

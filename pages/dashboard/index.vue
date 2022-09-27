@@ -7,8 +7,28 @@
 </template>
 
 <script>
+import {
+  XIcon,
+  UserIcon,
+  UsersIcon,
+  TruckIcon,
+  FlagIcon,
+  LayersIcon,
+  ListIcon,
+} from "vue-feather-icons";
 export default {
   layout: "admin",
+  name: "dashboard",
+  async asyncData({ $axios, store }) {
+    await $axios
+      .$get(`/dashboard`)
+      .then((res) => {
+        store.dispatch("admin/getAllDataFromApi", res);
+      })
+      .catch((err) => store.dispatch("handleError", err.response.data.errors));
+    return {};
+  },
+
   data() {
     return {
       statisticsItems: [
