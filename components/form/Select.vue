@@ -12,7 +12,7 @@
           :label="label"
           :dir="dashDir"
           :clearable="clearable"
-          :options="getAutoList"
+          :options="listKey ? getAutoList : allData"
           :disabled="disabled"
           :placeholder="placeHolder"
           @input="$emit('changeData')"
@@ -25,7 +25,6 @@
 
 <script>
 export default {
-  mounted() {},
   props: {
     title: {
       type: String,
@@ -33,6 +32,7 @@ export default {
     },
     label: String,
     storeKey: String,
+    allData: Array,
     module: String,
     listKey: String,
     placeHolder: {
@@ -40,6 +40,10 @@ export default {
       default: "غير محدد",
     },
     multiple: {
+      type: Boolean,
+      default: false,
+    },
+    global: {
       type: Boolean,
       default: false,
     },
@@ -85,7 +89,11 @@ export default {
       },
     },
     getAutoList() {
-      return this.$store.getters[`${this.module}/get${this.listKey}`];
+      if (this.global) {
+        return this.$store.getters[`global/get${this.listKey}`];
+      } else {
+        return this.$store.getters[`${this.module}/get${this.listKey}`];
+      }
     },
   },
 };

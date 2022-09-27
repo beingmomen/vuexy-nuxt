@@ -46,7 +46,7 @@
         responsive
         :per-page="perPage"
         :current-page="currentPage"
-        :items="items"
+        :items="getItems"
         :fields="headers"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
@@ -84,7 +84,7 @@
     <b-col cols="12">
       <b-pagination
         v-model="currentPage"
-        :total-rows="totalRows"
+        :total-rows="totalItems"
         :per-page="perPage"
         align="center"
         size="sm"
@@ -98,7 +98,14 @@
 import { MoreVerticalIcon, EditIcon, TrashIcon } from "vue-feather-icons";
 
 export default {
-  props: ["headers", "items"],
+  props: {
+    headers: Array,
+    module: String,
+    notId: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       perPage: 25,
@@ -141,10 +148,12 @@ export default {
         .filter((f) => f.sortable)
         .map((f) => ({ text: f.label, value: f.key }));
     },
-  },
-  mounted() {
-    // Set the initial number of items
-    this.totalRows = this.items.length;
+    getItems() {
+      return this.$store.getters[`${this.module}/getAllData`];
+    },
+    totalItems() {
+      return this.$store.getters[`${this.module}/getTotalItems`];
+    },
   },
   methods: {
     showMsgBoxTwo(data) {
