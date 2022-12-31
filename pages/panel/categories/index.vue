@@ -1,0 +1,55 @@
+<template>
+  <UtilsTheContentWrapper>
+    <template #content>
+      <UtilsTheTable
+        :title="$t('category')"
+        :filter="false"
+        :headers="headers"
+        module-name="panel/categories"
+        path="/panel/categories"
+        lottie="https://assets10.lottiefiles.com/packages/lf20_ekfccbba.json"
+      />
+    </template>
+  </UtilsTheContentWrapper>
+</template>
+
+<script>
+export default {
+  name: 'Categories',
+  layout: 'panel',
+  async asyncData({ $axios, store }) {
+    const data = await $axios.$get('/categories')
+    store.dispatch('panel/categories/getAllDataFromApi', data)
+    return {}
+  },
+  data() {
+    return {
+      headers: [
+        {
+          key: 'avatar',
+          label: this.$t('image'),
+          formatter: (value, key, item) => {
+            const url = `${this.$config.NODE_URL_images}/categories/${item.image}`
+            return url
+          }
+        },
+        {
+          key: 'arabicName',
+          label: this.$t('ar_name')
+        },
+        {
+          key: 'englishName',
+          label: this.$t('en_name')
+        },
+        {
+          key: 'actions',
+          label: this.$t('actions')
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>
